@@ -2,7 +2,7 @@ package application;
 
 /* 
  * File name : Employee.java
- * Author : shannon donnelly
+ * Author : Shannon Donnelly
  * Student number : c23302301
  * Description of class : Represents an Employee enrolled in a training course with validation
  */
@@ -27,7 +27,7 @@ public class Employee {
         }
 
         // Validate trainingCourse
-        if (!trainingCourse.startsWith("FOOD")) {
+        if (trainingCourse != null && !trainingCourse.startsWith("FOOD")) {
             System.out.println("Error: Course name should start with 'FOOD'. Setting course to 'ERROR'.");
             this.trainingCourse = "ERROR";
         } else {
@@ -35,7 +35,7 @@ public class Employee {
         }
     }
 
-    // Default Constructor (Initialises with Default Values)
+    // Default Constructor (Initializes with Default Values)
     public Employee() {
         this.employeeNumber = 0;
         this.name = "";
@@ -56,16 +56,17 @@ public class Employee {
             this.yearsWorking = yearsWorking;
         } else {
             System.out.println("Error: Must have 5+ years of experience.");
+            this.yearsWorking = 0; // Invalid input case
         }
     }
 
     public String getTrainingCourse() { return trainingCourse; }
     public void setTrainingCourse(String trainingCourse) {
-        if (!trainingCourse.startsWith("FOOD")) {
+        if (trainingCourse != null && trainingCourse.startsWith("FOOD")) {
+            this.trainingCourse = trainingCourse;
+        } else {
             System.out.println("Error: Course name should start with 'FOOD'. Setting course to 'ERROR'.");
             this.trainingCourse = "ERROR";
-        } else {
-            this.trainingCourse = trainingCourse;
         }
     }
 
@@ -86,4 +87,3 @@ public class Employee {
         return employeeNumber == employee.employeeNumber;
     }
 }
-
