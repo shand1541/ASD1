@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 /* 
  * File name : TrainingCourses.java
- * Author : shannon donnelly 
+ * Author : Shannon Donnelly 
  * Student number : c23302301
  * Description of class : Driver class for managing employee training course enrollments
  */
 
 public class TrainingCourses {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         LinkedList<Employee> employeeList = new LinkedList<Employee>();
 
@@ -44,7 +44,11 @@ public class TrainingCourses {
             String courseName = scanner.nextLine();
 
             Employee employee = new Employee(employeeNumber, name, yearsWorking, courseName);
-            employeeList.add(employee);
+            if (!employeeList.contains(employee)) {
+                employeeList.add(employee);
+            } else {
+                System.out.println("Error: Employee with this number already exists.");
+            }
         }
 
         // 2. Display all employee details
@@ -61,64 +65,24 @@ public class TrainingCourses {
             employeeList.delete(employeeToRemove);
             System.out.println("Employee removed successfully.");
         } else {
-            System.out.println("Employee not found.");
+            System.out.println("Error: Employee not found.");
         }
 
-        // 4. Display details of all employees on training courses
-        System.out.println("\nDisplaying all employees still on courses:");
+        // 4. Display the list again after removal
+        System.out.println("\nDisplaying updated list of employees:");
         employeeList.displayList();
-
-        // 5. Delete all employees enrolled in a specified course
-        System.out.print("\nEnter the name of the course to delete all enrollments: ");
-        String courseToDelete = scanner.nextLine();
-        deleteEmployeesByCourse(employeeList, courseToDelete);
-
-        // 6. Display the remaining employees
-        System.out.println("\nDisplaying remaining employees:");
-        employeeList.displayList();
-
-        // 7. Run a custom function (e.g., count employees with over 10 years experience)
-        int experiencedEmployees = countExperiencedEmployees(employeeList, 10);
-        System.out.println("\nNumber of employees with over 10 years of experience: " + experiencedEmployees);
-
-        scanner.close();
     }
 
-    // Custom function to count employees with a certain level of experience
-    private static int countExperiencedEmployees(LinkedList<Employee> employeeList, int years) {
-        int count = 0;
-        Employee current = employeeList.getFirst();
+    // Utility method to find an employee by number
+    public static Employee findEmployeeByNumber(LinkedList<Employee> list, int employeeNumber) {
+        LinearNode<Employee> current = list.getFirst();
         while (current != null) {
-            if (current.getYearsWorking() > years) {
-                count++;
+            if (current.getElement().getEmployeeNumber() == employeeNumber) {
+                return current.getElement();
             }
-            current = employeeList.getNext(current);
-        }
-        return count;
-    }
-
-    // Helper method to find an employee by their number
-    private static Employee findEmployeeByNumber(LinkedList<Employee> employeeList, int employeeNumber) {
-        Employee current = employeeList.getFirst();
-        while (current != null) {
-            if (current.getEmployeeNumber() == employeeNumber) {
-                return current;
-            }
-            current = employeeList.getNext(current);
+            current = current.getNext();
         }
         return null;
     }
-
-    // Helper method to delete all employees enrolled in a specific course
-    private static void deleteEmployeesByCourse(LinkedList<Employee> employeeList, String courseName) {
-        Employee current = employeeList.getFirst();
-        while (current != null) {
-            Employee nextEmployee = employeeList.getNext(current);
-            if (current.getTrainingCourse().equals(courseName)) {
-                employeeList.delete(current);
-            }
-            current = nextEmployee;
-        }
-        System.out.println("Deleted all employees enrolled in course: " + courseName);
-    }
 }
+
