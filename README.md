@@ -1,6 +1,6 @@
-# ASD1
+# Employee Management Training Courses Application
 
-## Employee Management Training Courses Application
+## ASD1 - backend
 
 A Java-based application designed to manage employees enrolled in training courses, providing functionalities to add, search, display, and delete employees while validating their details.
 
